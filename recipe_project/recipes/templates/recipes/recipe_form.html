@@ -1,23 +1,14 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if recipe %}Edit Recipe{% else %}Add New Recipe{% endif %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% extends 'recipes/base.html' %}
 
-</head>
-<body>
-    <h1>{% if recipe %}Edit Recipe{% else %}Add New Recipe{% endif %}</h1>
+{% block title %}{% if recipe %}Edit Recipe{% else %}Add New Recipe{% endif %}{% endblock %}
 
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
+{% block content %}
+<h1>{% if recipe %}Edit Recipe{% else %}Add New Recipe{% endif %}</h1>
 
-    </form>
-    <a href="{% url 'recipe_list' %}">Back to Recipe</a>
-    
-</body>
-</html>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'recipe_list' %}">Back to Recipe</a>
+{% endblock %}

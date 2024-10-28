@@ -1,7 +1,6 @@
-from django.shortcuts import render, get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Recipe
 from .forms import RecipeForm
-
 
 def recipe_list(request):
     recipes = Recipe.objects.all()
@@ -10,7 +9,6 @@ def recipe_list(request):
 def recipe_detail(request, pk):
     recipe = get_object_or_404(Recipe, pk=pk)
     return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
-
 
 def recipe_create(request):
     if request.method == "POST":
@@ -40,4 +38,9 @@ def recipe_delete(request, pk):
         return redirect('recipe_list')
     return render(request, 'recipes/recipe_confirm_delete.html', {'recipe': recipe})
 
+def about(request):
+    return render(request, 'recipes/about.html') 
 
+
+def contact(request):
+    return render(request, 'recipes/contact.html')  
