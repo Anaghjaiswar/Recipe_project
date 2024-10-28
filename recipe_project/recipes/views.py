@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Recipe
+from django.http import HttpResponse
+from .models import Recipe,ContactMessage
 from .forms import RecipeForm
+
 
 def recipe_list(request):
     recipes = Recipe.objects.all()
@@ -43,4 +45,20 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'recipes/contact.html')  
+    if request.method == 'POST':
+        name = request.POST.get('myname')
+        email = request.POST.get('email')
+        issue_type = request.POST.get('choices')
+        message = request.POST.get('message')
+
+
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            issue_type=issue_type,
+            message=message
+        )
+
+        return HttpResponse("Thank you for your message! We will get back to you shortly.")
+
+    return render(request, 'recipes/contact.html')
