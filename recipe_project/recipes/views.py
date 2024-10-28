@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Recipe,ContactMessage
 from .forms import RecipeForm
 
+def home(request):
+    return render(request, 'recipes/home.html')
 
 def recipe_list(request):
     recipes = Recipe.objects.all()

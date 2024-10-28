@@ -1,0 +1,10 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="home-container">
+        <h1>Welcome to the Recipe App!</h1>
+        <p>Discover and share delicious recipes.</p>
+        <a href="{% url 'recipe_list' %}" class="btn">View Recipes</a>
+    </div>
+{% endblock %}
