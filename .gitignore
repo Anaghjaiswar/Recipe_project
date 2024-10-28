@@ -1,41 +1,57 @@
+# Python
 *.pyc
 *.pyo
 *.pyd
 __pycache__/
-
-
-.env
-*.env
-
-
-db.sqlite3  
-/media/    
-/staticfiles/ 
-
-
-venv/
-env/
-virtualenv/
-ENV/
-.venv
-
-
+*.sqlite3
 *.log
-*.bak
-*.sql
 
+# Django
+db.sqlite3
+/media
+/staticfiles
+*.pot
+*.py[cod]
 
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.idea/
 .vscode/
+*.sublime-project
+*.sublime-workspace
 
-
+# Operating System Files
 .DS_Store
+Thumbs.db
 
-
-node_modules/
-
-
-*/migrations/*
-
-
+# Coverage Reports
 htmlcov/
 .coverage
+.coverage.*
+*.cover
+*.log
+
+# Test and Coverage Files
+.coverage
+nosetests.xml
+test_*.xml
+*.cover
+*.log
+*.egg-info/
+dist/
+build/
+
+# Local configuration
+local_settings.py
+
+# Other
+*.bak
+*.tmp
