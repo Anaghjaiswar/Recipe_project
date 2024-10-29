@@ -6,7 +6,7 @@ from tinymce.widgets import TinyMCE
 class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
-        fields = ['title', 'description', 'ingredients', 'instructions']
+        fields = ['title', 'description', 'ingredients', 'instructions','recipe_image']
         widgets = {
             'description': TinyMCE(attrs={'style': 'width: 100%; height: 150px;'}),
             'ingredients': TinyMCE(attrs={'style': 'width: 100%; height: 300px;'}),

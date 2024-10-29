@@ -8,9 +8,29 @@ body {
 h1, h2 {
     color: #2c3e50;
 }
-
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
 li {
     margin: 30px;
+}
+p{
+    font-size: 1.2em; 
+    line-height: 1.5;
+}
+
+.container {
+    width: 30vw;
+    height: 50vh;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 a, button {

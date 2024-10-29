@@ -5,6 +5,7 @@ from autoslug import AutoSlugField
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='title', unique=True, null=True)
+    recipe_image = models.FileField(upload_to="recipes/", max_length=250, null=True,default=None)
     description = models.TextField()
     ingredients = models.TextField()
     instructions = models.TextField()
