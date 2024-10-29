@@ -3,7 +3,8 @@
 *.pyo
 *.pyd
 __pycache__/
-*.sqlite3
+recipe_project/recipes/__pycache__
+*db.sqlite3
 *.log
 
 # Django
