@@ -1,8 +1,10 @@
 from django.db import models
 from tinymce.models import HTMLField
+from autoslug import AutoSlugField
 
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
+    slug = AutoSlugField(populate_from='title', unique=True, null=True)
     description = models.TextField()
     ingredients = models.TextField()
     instructions = models.TextField()

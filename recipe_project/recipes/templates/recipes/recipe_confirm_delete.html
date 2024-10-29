@@ -9,6 +9,6 @@
 <form method="post">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
-    <a href="{% url 'recipe_detail' recipe.pk %}">Cancel</a>
+    <a href="{% url 'recipe_detail' recipe.slug %}">Cancel</a>
 </form>
 {% endblock %}
