@@ -34,6 +34,9 @@ def recipe_update(request, slug):
     if request.method == "POST":
         form = RecipeForm(request.POST, request.FILES, instance=recipe)
         if form.is_valid():
+            if form.cleaned_data.get('delete_image') and recipe.recipe_image:
+                recipe.recipe_image.delete()
+                recipe.recipe_image = None
             form.save()
             return redirect('recipe_detail', slug=recipe.slug)
     else:

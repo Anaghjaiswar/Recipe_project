@@ -10,6 +10,12 @@
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
+
+    {% if recipe.recipe_image %}
+        <p>Current Image:</p>
+        <img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.title }}" style="max-width: 200px;">
+    {% endif %}
+
     <button type="submit">Save</button>
 </form>
 <a href="{% url 'recipe_list' %}">Back to Recipe</a>

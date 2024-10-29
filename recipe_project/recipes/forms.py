@@ -4,6 +4,7 @@ from tinymce.widgets import TinyMCE
 
 
 class RecipeForm(forms.ModelForm):
+    # delete_image = forms.BooleanField(required=False, label="Delete current image")
     class Meta:
         model = Recipe
         fields = ['title', 'description', 'ingredients', 'instructions','recipe_image']
