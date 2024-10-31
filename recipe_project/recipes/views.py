@@ -6,6 +6,11 @@ from .forms import RecipeForm
 def home(request):
     return render(request, 'recipes/home.html')
 
+def login(request):
+    if request.method == "POST":
+        return redirect('home')
+    return render(request, 'recipes/login.html')
+
 def recipe_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'recipes/recipe_list.html', {'recipes': recipes})
