@@ -2,14 +2,53 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Recipe,ContactMessage
 from .forms import RecipeForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 def home(request):
     return render(request, 'recipes/home.html')
 
-def login(request):
+def user_login(request):
     if request.method == "POST":
-        return redirect('home')
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            messages.success(request, "Logged in successfully!")
+            login(request, user)
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid email or password.")
+
     return render(request, 'recipes/login.html')
+
+def signup(request):
+    if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
+
+        if password == confirm_password:
+            if not User.objects.filter(username= email).exists():
+                user = User.objects.create_user(username = email, password=password)
+                user.first_name = first_name
+                user.last_name = last_name
+
+                user.save()
+
+                messages.success(request, "Your account has been created successfully!")
+                return redirect("login")
+            else:
+                messages.error(request, "An account with this email already exists.")
+        else:
+            messages.error(request,"passwords do not match.")
+
+
+    return render(request, 'recipes/signup.html')
 
 def recipe_list(request):
     recipes = Recipe.objects.all()
@@ -20,15 +59,15 @@ def recipe_detail(request, slug):
     return render(request, 'recipes/recipe_detail.html', {'recipe': recipe})
 
 from django.shortcuts import render, redirect
-from .forms import RecipeForm  # Assuming you have a form for the recipe
+from .forms import RecipeForm  
 
 def recipe_create(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save(commit=False)
-            recipe.save()  # Save the new recipe
-            return redirect('recipe_list')  # Redirect to the recipe list after saving
+            recipe.save() 
+            return redirect('recipe_list')  
     else:
         form = RecipeForm()
     return render(request, 'recipes/recipe_form.html', {'form': form})
