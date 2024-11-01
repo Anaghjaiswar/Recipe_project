@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from .models import Recipe,ContactMessage
 from .forms import RecipeForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 
 def home(request):
     return render(request, 'recipes/home.html')
@@ -34,7 +36,11 @@ def signup(request):
 
         if password == confirm_password:
             if not User.objects.filter(username= email).exists():
-                user = User.objects.create_user(username = email, password=password)
+                user = User.objects.create_user(
+                    username=email,  # This is set to the email
+                    email=email,  # Set the email field correctly
+                    password=password
+                )
                 user.first_name = first_name
                 user.last_name = last_name
 
@@ -50,8 +56,9 @@ def signup(request):
 
     return render(request, 'recipes/signup.html')
 
+@login_required
 def recipe_list(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(user=request.user)
     return render(request, 'recipes/recipe_list.html', {'recipes': recipes})
 
 def recipe_detail(request, slug):
@@ -61,17 +68,32 @@ def recipe_detail(request, slug):
 from django.shortcuts import render, redirect
 from .forms import RecipeForm  
 
+@login_required
 def recipe_create(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save(commit=False)
+            recipe.user = request.user
             recipe.save() 
             return redirect('recipe_list')  
     else:
         form = RecipeForm()
     return render(request, 'recipes/recipe_form.html', {'form': form})
 
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('recipe_list')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'recipes/change_password.html', {'form': form})
 
 def recipe_update(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)

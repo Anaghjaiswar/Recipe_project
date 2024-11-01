@@ -4,6 +4,12 @@
 
 {% block content %}
 <h1>About Us</h1>
-<p>Hello dear friends,<br> in this app you can add your recipes with instructions, ingredients, and descriptions
+{% if user.is_authenticated %}
+<p>Welcome, {{ user.get_full_name }}!</p>
+<p>Email: {{ user.email }}</p>
+{% else %}
+<p>You are not logged in.</p>
+{% endif %}
+<p>Hello dear friend,<br> in this app you can add your recipes with instructions, ingredients, and descriptions
 and can also update or delete them whenever you wish.</p>
 {% endblock %}

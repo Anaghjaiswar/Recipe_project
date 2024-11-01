@@ -1,8 +1,10 @@
 from django.db import models
 from tinymce.models import HTMLField
 from autoslug import AutoSlugField
+from django.contrib.auth.models import User
 
 class Recipe(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     slug = AutoSlugField(populate_from='title', unique=True, null=True)
     recipe_image = models.FileField(upload_to="recipes/", max_length=250, null=True,default=None, blank=True)
