@@ -17,6 +17,8 @@ class RecipeAdminForm(forms.ModelForm):
 # Create a custom admin class for the Recipe model
 class RecipeAdmin(admin.ModelAdmin):
     form = RecipeAdminForm
+    list_display = ('title', 'user', 'created_at')
+    list_filter = ('user',)
 
 
 admin.site.register(Recipe, RecipeAdmin)
