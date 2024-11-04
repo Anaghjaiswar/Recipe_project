@@ -5,7 +5,7 @@
 {% block content %}
 <h1>{{ recipe.title }}</h1>
 {% if recipe.recipe_image %}
-        <div class="container">
+        <div class="container img-fluid">
             <img src="{{ recipe.recipe_image.url }}" alt="{{ recipe.title }}">
         </div>
     {% endif %}
